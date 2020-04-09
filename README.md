@@ -1,10 +1,10 @@
 # kidoku-web
 
-FIXME: Write a one-line description of your library/project.
+A "kidoku" generator.  Produces 6x6 sudoku variants for easy printing.
 
 ## Overview
 
-FIXME: Write a paragraph about the library/project and highlight its goals.
+The more common 9x9 sudoku generator (and paper books) are easily available, but this project is targeted at intermediate/beginner sudoku solvers looking for a source of problems.
 
 ## Setup
 
@@ -51,6 +51,6 @@ Build a single release artifact with the following script and then open `index_r
 
 ## License
 
-Copyright © 2016 FIXME
+Copyright © 2020 Tevis Tsai.
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
