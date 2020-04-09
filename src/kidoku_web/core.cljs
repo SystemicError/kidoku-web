@@ -8,7 +8,7 @@
 
 ;(enable-console-print!)
 
-(println "Program started.")
+;(println "Program started.")
 
 ; since cljs doesn't have math.combinatorics
 (defn power-set [letters]
@@ -196,17 +196,13 @@
                            "d1" "d2" "d3" "d4" "d5" "d6"
                            "e1" "e2" "e3" "e4" "e5" "e6"
                            "f1" "f2" "f3" "f4" "f5" "f6"))
-        dummy (println (str "\nentries:\n" (into [] entries)))
+        ;dummy (println (str "\nentries:\n" (into [] entries)))
         ]
     (doseq [r (range 6)
             c (range 6)]
       (set! (.-innerHTML (nth entries (+ (* r 6) c)))
             (if (= 1 (count (nth (nth grid r) c)))
               (str (first (sort (nth (nth grid r) c))))
-              " ")))
-    (println (grid-to-str grid))))
+              " ")))))
 
 (set! (.-onclick (.getElementById js/document "generate-puzzle")) #(generate-puzzle))
-
-
-(println (str (into [] (power-set (range 3)))))
