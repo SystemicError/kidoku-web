@@ -144,13 +144,26 @@
         grid
         (recur region-ruled)))))
 
+(defn validate-solution
+  "Checks if a solution is correct."
+  [grid]
+  (let [transposed (transpose grid)
+        regioned (regions-to-rows grid)
+        check #(apply = (concat (list 6) (map count (map set %))))
+        ]
+    (and (check grid)
+         (check transposed)
+         (check regioned))))
+
 (defn generate-kidoku
   "Generates a 6x6 kidoku."
   ([] (generate-kidoku (blank-grid 6)))
   ([grid]
    (let [simplified (simplify-kidoku grid)]
      (if (solved? simplified)
-       grid ; base case
+       (if (validate-solution (simplify-kidoku grid))
+         grid ; base case
+         (recur (blank-grid 6)))
        (let [; add a hint to our grid
              indices (for [r (range 6) c (range 6)]
                        {:row r :col c})
@@ -174,15 +187,6 @@
              ;                    ))
              ]
          (recur hinted-grid))))))
-
-
-(defn set-paces [delta]
-  (let [paces (.getElementById js/document "paces")
-        new-value (max (+ (js/parseInt (.-value paces)) delta) 0)
-        paces-text (.getElementById js/document "paces-text")]
-    (set! (.-value paces) new-value)
-    (set! (.-innerHTML paces-text) (str new-value " paces"))))
-
 
 
 
