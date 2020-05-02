@@ -209,4 +209,43 @@
               (str (first (sort (nth (nth grid r) c))))
               " ")))))
 
+(def blank #{1 2 3 4 5 6})
+
+(defn reveal-answer []
+  "Solve kidoku and display solution on the page."
+  (let [entries (map #(.getElementById js/document %)
+                     (list "a1" "a2" "a3" "a4" "a5" "a6"
+                           "b1" "b2" "b3" "b4" "b5" "b6"
+                           "c1" "c2" "c3" "c4" "c5" "c6"
+                           "d1" "d2" "d3" "d4" "d5" "d6"
+                           "e1" "e2" "e3" "e4" "e5" "e6"
+                           "f1" "f2" "f3" "f4" "f5" "f6"))
+        digits (map #(let [s (.-innerHTML %)]
+                       (if (= " " s)
+                         blank
+                         #{(js/parseInt s)})) entries)
+        grid (list (take 6 digits)
+                   (take 6 (drop 6 digits))
+                   (take 6 (drop 12 digits))
+                   (take 6 (drop 18 digits))
+                   (take 6 (drop 24 digits))
+                   (take 6 (drop 30 digits)))
+        dummy (println (str "\nentries:\n" (into [] entries)
+                            "\ngrid:\n" (into [] grid)
+                            "\nvalid:\n" (validate-solution solved)))
+        solved (simplify-kidoku grid)
+        ]
+    (doseq [r (range 6)
+            c (range 6)]
+      (set! (.-innerHTML (nth entries (+ (* r 6) c)))
+            (if (= 1 (count (nth (nth solved r) c)))
+              (str (first (sort (nth (nth solved r) c))))
+              " ")))))
+
+
+
+
+
+
 (set! (.-onclick (.getElementById js/document "generate-puzzle")) #(generate-puzzle))
+;(set! (.-onclick (.getElementById js/document "reveal-answer")) #(reveal-answer))
